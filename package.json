@@ -1,0 +1,50 @@
+{
+  "name": "mercato",
+  "version": "0.1.0",
+  "description": "A privacy friendly host for apps in the RemoteStorage ecosystem",
+  "scripts": {
+    "compile": "tsc",
+    "dev": "NODE_PATH=. nodemon --watch . --exec 'ts-node --transpile-only' ./src/index.ts",
+    "dev-ui": "browser-sync start --config bs-config.js",
+    "deploy": "echo 'implement this!'",
+    "clean": "echo 'implement this too!",
+    "test": "jest",
+    "test-watch": "jest --watch"
+  },
+  "keywords": [],
+  "author": "mercato@stephensisk.net",
+  "license": "MIT",
+  "dependencies": {
+    "connect": "^3.7.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.17.1",
+    "express-async-router": "^0.1.15",
+    "express-handlebars": "^6.0.2",
+    "express-http-proxy": "^1.6.3",
+    "express-session": "^1.17.2",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.16",
+    "pug": "^3.0.2",
+    "remotestoragejs": "^2.0.0-beta.3",
+    "typescript": "^4.5.2",
+    "vhost": "^3.0.2"
+  },
+  "devDependencies": {
+    "@sucrase/jest-plugin": "^2.2.0",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/express-http-proxy": "^1.6.3",
+    "@types/jest": "^27.0.3",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/node": "^16.11.11",
+    "@types/supertest": "^2.0.12",
+    "@types/vhost": "^3.0.4",
+    "jest": "^27.4.5",
+    "supertest": "^6.2.4",
+    "ts-node": "^10.4.0"
+  }
+}

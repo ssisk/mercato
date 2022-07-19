@@ -1,0 +1,15 @@
+extends layout
+
+block layout-content
+  div.View
+    h1.Banner Mercato
+    div.Message
+      div.Title
+        h1 Available Apps 
+    p These are the apps available for you to use:
+    each app in mercatoApps
+      div 
+        a(href=app.url)= app.name 
+    p Mercato is an open source product - if you'd like to see more apps here, please let us know what you'd like to see or consider working on an app yourself!
+
+          

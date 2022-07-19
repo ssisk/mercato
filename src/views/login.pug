@@ -1,0 +1,12 @@
+extends layout
+
+block layout-content
+  div.main-text
+    h1 Log in to your RemoteStorage account to start using Mercato
+    p Mercato uses a token stored in your RemoteStorage to remember who you are, so to get started, connect to your RemoteStorage:
+    div(id="rs-widget-home")
+    p This is all the information we need to setup your Mercato account! 
+    
+    script(src="/remotestorage.js")
+    script(src="/widget.js") 
+    script(src="/get_mercato_token_from_rs.js")

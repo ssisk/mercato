@@ -1,0 +1,35 @@
+extends layout
+
+block layout-content
+  div.main-text
+    h1.Banner Mercato
+    p Mercato is a web based app platform (similar to an app store) that:
+    ul
+      li Guarantees your privacy by running your apps inside of a privacy sandbox - developers cannot see your data
+      li Your data for all apps is available on all your devices by syncing your data through <a href="https://www.remotestorage.io">RemoteStorage</a>
+      li Your apps work on any device with a web browser
+      li You own your data - you can view/export/delete any of your data that's stored inside RemoteStorage at any time. 
+      li Did we mention this is all free?
+
+    h2 Seem too good to be true?
+    p Mercato is based on a simple principle: <b>an app cannot violate your privacy if it cannot send your data to the app developers or anyone else</b>. So Mercato runs your apps inside of a privacy sandbox, where the apps cannot communicate to anywhere on the internet. The privacy sandbox works using modern web standards so it is available on any modern browser.
+    p The tradeoff is that Mercato can't run some types of apps that require data to be sent over the internet. So you couldn't build a search engine or social network on Mercato. However, it's perfect for creative tools like document editors, spreadsheets, drawing apps, journals, todo apps, etc. 
+
+    h1 Getting started (all services are free)
+    p A quick caveat: Mercato and much of the RemoteStorage ecosystem are considered to be in beta. We recommend using a tool like <a href="https://github.com/raucao/rs-backup">rs-backup</a> to keep a copy of your data. (This is currently a developer command line tool, but we'd like to make it a more user friendly desktop or web app. Feel free to volunteer!)
+
+    h2 1. Sign up for a RemoteStorage account
+    p <a href="https://5apps.com/storage">5apps.com</a> is a free provider that has been around for a while, but if you'd like more options there's a great guide on <a href="https://remotestorage.io/get/">RemoteStorage.io</a>.
+
+    h2 2. Connect to your RemoteStorage account
+    p Mercato uses a token stored in your RemoteStorage to remember who you are, so to get started, connect to your RemoteStorage:
+    <a href="/login">Log in to RemoteStorage now</a>
+    p 
+      b There's no additional setup needed for mercato - just sign in to your RS account
+
+    h2 3. Start using apps
+    p At any time (including before you create a mercato account) you can browse the list of all the apps available at: <a href="/listing">the app list</a>
+
+    h1 Why doesn't this cost more?
+    p Storage of normal text data (eg things like documents) is fairly small compared to the size of video/songs/etc and is fairly cheap for developers. Your device runs the apps (rather than the Mercato server) so there's no need to pay for compute.
+    
