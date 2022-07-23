@@ -1,7 +1,7 @@
 {
   "name": "mercato",
   "version": "0.1.0",
-  "description": "A privacy friendly host for apps in the RemoteStorage ecosystem",
+  "description": "A privacy friendly hosting service for apps in the RemoteStorage ecosystem",
   "scripts": {
     "compile": "tsc",
     "dev": "NODE_PATH=. nodemon --watch . --exec 'ts-node --transpile-only' ./src/index.ts",

@@ -99,6 +99,8 @@ How do I develop for Mercato?
 
 Mercato is meant to work with normal RS apps, so you can follow your normal development cycle for a web app. The example app is a good place to start. (TODO: provide a link)
 
+Apps in theory will work as-is on Mercato, but I ran into some issues with the current CSP restrictions causing issues with the RS widget, and I'm assuming I'll probably find some more of that. I'm not sure how permissive/restrictive to be on CSP, so that's an area that I'd love feedback about. CSP is oriented toward blocking XSS attacks and I *think* a mercato app wouldn't need to worry about that, but I'm defaulting to overly restrictive for now.  
+
 Conventions for Mercato Appliations
 -----------------------------------
 
@@ -149,7 +151,7 @@ To ensure apps work offline has a second part, which is that the user's data nee
 
 ### Own Your Apps
 
-Once you start using an app on the mercato platform, that app's code will be downloaded to your RemoteStorage repository. I'd like to make sure that you can use the app even if the mercato server goes down/is no longer up. To support this, , but for longer term it'd be good to have another server available that the user can connect to. To support that we'll likely need a way for users to easily self host (or more likely start using another mercato instance stood up by a user.)
+Once you start using an app on the mercato platform, that app's code will be downloaded to your RemoteStorage repository. I'd like to make sure that you can use the app even if the mercato server goes down/is no longer up. I think you could get PWA working to support this, but for longer term it'd be good to have another server available that the user can connect to. To support that we'll likely need a way for users to easily self host (or more likely start using another mercato instance stood up by a user.)
 
 ### Privacy-first App Analytics
 
@@ -170,3 +172,8 @@ Currently there's no way for a Mercato app to do processing (eg for update a sea
 ### Other data platforms besides RemoteStorage
 
 There's about the mercato server itself that is tied to RemoteStorage - all you need is a service that can store and retrieve a token for the user and that . I haven't looked deeply but I believe Kinto is another service that it'd be easy for Mercato to support. You'd need to create a new Mercato client to retrieve the token, but that should be trivial.
+
+### Versioning of apps
+To me, part of "owning your apps" is not having them upgraded by a developer. So I'd love to have control over which version of the app I'm using.
+
+As a developer I have mixed feelings about this - users on old versions of apps can be vulnerable to security issues, and supporting data migrations between arbitrary versions of an app is a nightmare, but I think a simple first stab at this would be to simply allow users to pin an app at their current version rather than always being auto-upgraded to new versions. If/When you unpin, you'll be updated to the latest version. This supports the "I hate the new version and just want stick with what I have" scenario well, with the caveat that I'm not sure how users would be able to try out new versions of the app.   

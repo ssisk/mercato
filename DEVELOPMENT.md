@@ -27,16 +27,20 @@ To add a new app:
 2. update `files_server.ts`, `mercatoApps` constant to add the new app  
 
 # TODOs
-[] get front end code into better shape
-  [] convert get_mercato_token_from_rs over to typescript
-  [] switch remotestorage.js/widget.js so they are loaded from npm 
-  [] get_mercato_token_from_rs should switch from using alerts to 
+* [ ] get front end code into better shape
+  * [ ] convert get_mercato_token_from_rs over to typescript
+  * [ ] switch remotestorage.js/widget.js so they are loaded from npm 
+  * [ ] get_mercato_token_from_rs should switch from using alerts to 
      tell the user information, and instead show status text on the 
      webpage
-  [] create a site header for the mercato server
-[] helmet for store_server?
-[] logout flow: show the users a nice logout message on a real mercato page :)
-[] create a wrapper for app file access that allows them to be stored
+  * [ ] create a site header for the mercato server
+* [ ] use helmet in store_server express app?
+* [ ] logout flow: show the users a nice logout message on a real mercato page :)
+* [ ] create a wrapper for app file access that allows them to be stored
    in different types of storage - eg AWS S3/postgres/file system/whatever
-[] Content-Security-Policy: consider allowing more inline things (eg fonts) 
-   since XSS is less of a risk when there's no way to exfiltrate data 
+* [ ] Content-Security-Policy: consider allowing more inline things (eg fonts) 
+   since XSS is less of a risk when there's no way to exfiltrate data it (prove this is true or not)
+* [ ] CSP: do we need wrong-val-src? Could we just switch to setting default-src and not worrying as much?
+* [ ] post-login actions: when a user visits https://diary.nooq.run and mercato needs to log them in, they should be sent back to the app after login
+* [ ] make it easier for users of apps to switch/find other apps (create a mercato-specific remotestorage-widget that allows app switching?)
+* [ ] give developers an easy way to test their Mercato apps - perhaps a simple nodejs server that emulates the current CSP settings?
