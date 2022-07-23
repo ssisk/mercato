@@ -7,7 +7,7 @@ const start = async () => {
   const mercEnv = app.get("env") == "development" ? MercatoEnv.Dev : MercatoEnv.Prod;
   const fullApp = await getCombinedApp(app, mercEnv);
 
-  const port = 3000;
+  const port = process.env.PORT;
 
   fullApp.listen(port, () => {
     console.log(`Mercato server is up on ${port}`);

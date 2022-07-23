@@ -10,7 +10,7 @@ export enum MercatoEnv {
 }
 
 export const domainNames: Record<MercatoEnv, string> = {
-  dev: "mercato-dev.run:3000",
+  dev: "mercato-dev.run:8080",
   prod: prodUrl,
 };
 
@@ -32,11 +32,11 @@ export const getAppDomainName = (appName: string, env: MercatoEnv) => {
   if (!appName.match(/[(a-zA-Z)]+/)) {
     throw new Error("invalid appname: '" + appName + "'");
   }
-  return `${getScheme(env)}${appName}.${domainNames[env]}`;
+  return `${appName}.${domainNames[env]}`;
 };
 
 export const getUrl = (isDevEnv: boolean, domainName: string, path: string) => {
-  return (isDevEnv ? "https://" : "http://") + domainName + path;
+  return domainName + path;
 };
 
 export interface MercatoCookie {

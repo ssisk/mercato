@@ -2,7 +2,7 @@ import cookieParser from "cookie-parser";
 import express, { ErrorRequestHandler, Request } from "express";
 import helmet from "helmet";
 import path from "path";
-import { cookieSecret, prodUrl } from "./environment";
+import { cookieSecret } from "./environment";
 import {
   App,
   cookieName,
