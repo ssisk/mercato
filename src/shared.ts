@@ -32,11 +32,11 @@ export const getAppDomainName = (appName: string, env: MercatoEnv) => {
   if (!appName.match(/[(a-zA-Z)]+/)) {
     throw new Error("invalid appname: '" + appName + "'");
   }
-  return `${appName}.${domainNames[env]}`;
+  return `${getScheme(env)}${appName}.${domainNames[env]}`;
 };
 
-export const getUrl = (isDevEnv: boolean, domainName: string, path: string) => {
-  return domainName + path;
+export const getUrl = (env: MercatoEnv, domainName: string, path: string) => {
+  return getScheme(env) + domainName + path;
 };
 
 export interface MercatoCookie {

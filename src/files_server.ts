@@ -86,7 +86,7 @@ export const getAppFilesServer = async (mercEnv: MercatoEnv) => {
   app.use((req, res, next) => {
     const redirectWithError = (msg: string) => {
       console.error(msg);
-      res.redirect(getUrl(isDevEnv, domainNames[mercEnv], mercPaths.login));
+      res.redirect(getUrl(mercEnv, domainNames[mercEnv], mercPaths.login));
     };
     const rawMercatoCookie = req.signedCookies[cookieName] as string;
     if (!rawMercatoCookie) {
@@ -96,7 +96,7 @@ export const getAppFilesServer = async (mercEnv: MercatoEnv) => {
     const rsServerUrl = JSON.parse(rawMercatoCookie).serverUrl;
     if (!rsServerUrl) {
       console.error("Invalid mercato cookie, missing rsServerUrl", rawMercatoCookie);
-      res.redirect(getUrl(isDevEnv, domainNames[mercEnv], mercPaths.login));
+      res.redirect(getUrl(mercEnv, domainNames[mercEnv], mercPaths.login));
       return;
     }
     // invoke the helmet middleware for this request
