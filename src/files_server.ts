@@ -23,7 +23,6 @@ const SelfVal = `'self'`;
 const NoneVal = "'none'";
 
 export const getAppFilesServer = async (mercEnv: MercatoEnv) => {
-  const isDevEnv = mercEnv == MercatoEnv.Dev;
   const app = express();
 
   ///////// Middleware injection ////////////////
@@ -120,6 +119,7 @@ export const getAppFilesServer = async (mercEnv: MercatoEnv) => {
 
   // this is the main endpoint for retrieving app files
   app.get("*", (req, res, next) => {
+    console.log("start * !");
     // SECURITY: note that asset path is controlled by the user so
     // we cannot trust it
     const assetPath = req.path == "/" ? "./index.html" : req.path;
@@ -129,6 +129,7 @@ export const getAppFilesServer = async (mercEnv: MercatoEnv) => {
     // Currently, the app name and version are only retrieved from
     // an allow list of apps, so it's safe
     if (!app) {
+      console.error("User tried to access unknown app");
       res.status(404)
         .send("That is not an app on this Mercato server")
         .end();
@@ -140,7 +141,13 @@ export const getAppFilesServer = async (mercEnv: MercatoEnv) => {
       // SECURITY: here we pass off responsibility to sendFile. It must make sure
       // the file being retrieved is inside of appBaseDir.
       res.sendFile(assetPath, { root: appBaseDir }, (e) => {
-        res.status(404).end();
+        if (e) {
+          console.error("There was an error when sending file!");
+          console.error("error was: ", e);
+          res.status(404).end();
+        } else {
+          console.log("successful send! of", assetPath);
+        }
       });
     } catch (e: any) {
       console.error(e.message);

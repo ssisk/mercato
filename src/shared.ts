@@ -44,7 +44,7 @@ export interface MercatoCookie {
   serverUrl: string; // should be scheme + domain name: "https://files.nooq.run"
 }
 
-export const mercatoAppDir = path.resolve(__dirname, "..", "apps");
+export const mercatoAppDir = path.resolve(__dirname, "apps");
 
 export interface App {
   name: string;
