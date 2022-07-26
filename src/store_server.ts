@@ -139,7 +139,7 @@ export const getStoreServer = async (mercEnv: MercatoEnv) => {
   app.get(mercPaths.logout, (req, res) => {
     console.log("Logging out user");
     res.clearCookie(cookieName, { domain: cookieDomain, path: "/" });
-    res.status(200).send("You are no longer logged in!").end();
+    res.render("logout");
   });
 
   app.use(sharedErrorHandler_CSPAware);

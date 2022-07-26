@@ -1,0 +1,12 @@
+extends layout
+
+block layout-content
+  div.main-text
+    
+    h1 Logout
+    p You are now logged out from mercato. If you wish to also logout from RS, you can do so using the RS Widget below.
+    div(id="rs-widget-home")
+    
+    script(src="/remotestorage.js")
+    script(src="/widget.js") 
+    script(src="/logout.js")
