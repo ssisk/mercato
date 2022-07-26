@@ -6,6 +6,11 @@ block layout-content
     p Mercato uses a token stored in your RemoteStorage to remember who you are, so to get started, connect to your RemoteStorage:
     div(id="rs-widget-home")
     p This is all the information we need to setup your Mercato account! 
+    div(id="resetToken",style={display:'none'})
+      h1(style={color: "red"}) Error during Mercato login
+      p You have a mercato token in your RemoteStorage, but this server did not recognize it. You can reset your token here:
+      button(id="doTokenReset") Reset Mercato token
+      p This will reset your account on this server. If you're unsure whether or not you should do this, we suggest contacting the admins of this server.
     
     script(src="/remotestorage.js")
     script(src="/widget.js") 
