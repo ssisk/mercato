@@ -119,7 +119,6 @@ export const getAppFilesServer = async (mercEnv: MercatoEnv) => {
 
   // this is the main endpoint for retrieving app files
   app.get("*", (req, res, next) => {
-    console.log("start * !");
     // SECURITY: note that asset path is controlled by the user so
     // we cannot trust it
     const assetPath = req.path == "/" ? "./index.html" : req.path;
