@@ -20,7 +20,7 @@ const curDirname = path.dirname(curFilename);
 
 export const getStoreServer = async (mercEnv: MercatoEnv) => {
   const isDevEnv = mercEnv == MercatoEnv.Dev;
-  const cookieDomain = "." + domainNames[mercEnv];
+  const cookieDomain = domainNames[mercEnv].split(":")[0];
   const jwtIssuer = domainNames[mercEnv];
   const app = express();
   app.set("views", path.join(__dirname, "views"));
