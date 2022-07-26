@@ -60,7 +60,7 @@ export const getStoreServer = async (mercEnv: MercatoEnv) => {
   app.post("/user/create", async (req, res) => {
     const serverUrl = req.body.serverUrl;
     if (!serverUrl) {
-      res.status(400).send("must include userServer");
+      res.status(400).send("must include serverUrl");
       return;
     }
     const userId = await createUser();

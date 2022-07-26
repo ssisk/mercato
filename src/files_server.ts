@@ -22,6 +22,79 @@ const UnsafeInlineVal = "'unsafe-inline'";
 const SelfVal = `'self'`;
 const NoneVal = "'none'";
 
+// rsServerUrl is the Url for storage.
+// need to ensure that other endpoints are reachable
+// eg webfinger and storage urls are not served from same location
+const getRsUrls = (storageRsUrl: string): string[] => {
+  const splitUrl = storageRsUrl.split(".");
+
+  switch (splitUrl.length) {
+    case 0:
+      // ???? not sure that's possible?
+      throw new Error("invalid url");
+    case 1:
+      return [storageRsUrl];
+    case 2:
+      // example.com
+      return [storageRsUrl, "*." + storageRsUrl];
+    default:
+      // storage.example.com
+      // we want: ["example.com", "storage.example.com" "*.example.com"]
+      const root = splitUrl.slice(-2).join(".");
+      return [root, storageRsUrl, "*." + root];
+  }
+};
+
+const getHelmet = (rawStorageRsUrl: string) => {
+  return helmet({
+    contentSecurityPolicy: {
+      directives: {
+        "child-src": [SelfVal], // MDN docs are confusing, see https://github.com/w3c/webappsec-csp/issues/299
+        // I'm leaving child-src in since it doesn't hurt anything
+        "connect-src": [SelfVal, ...getRsUrls(rawStorageRsUrl)],
+        "default-src": [SelfVal],
+        // Consider allowing for fonts loaded
+        // using "data:"? Needs investigation
+        // to understand security risk
+        "font-src": [SelfVal], // , "data:"
+        "frame-src": [SelfVal],
+        "img-src": [SelfVal],
+        "manifest-src": [SelfVal],
+        "media-src": [SelfVal],
+        "object-src": [NoneVal],
+        "prefetch-src": [SelfVal],
+        "script-src": [SelfVal],
+        "script-src-elem": [SelfVal],
+        "script-src-attr": [SelfVal],
+        "style-src": [SelfVal],
+        /* right now, allowing inline RS widget uses this */
+        "style-src-elem": [SelfVal, UnsafeInlineVal],
+        "style-src-attr": [SelfVal, UnsafeInlineVal],
+        "worker-src": [SelfVal],
+
+        // document directives
+        "base-uri": [SelfVal],
+        "sandbox": null, // we are not using this directive
+
+        // Navigation directives
+        "form-action": [SelfVal],
+        "frame-ancestors": [SelfVal],
+        "navigate-to": null, // This means navigation anywhere is allowed
+        // TODO: consider only allow navigation by having navigate-to
+        // set to a redirect domain controlled by us
+
+        // Reporting directives
+        /* todo: this would be handy to see
+        "report-uri": [SelfVal],
+        "report-to": [SelfVal],
+        */
+
+        // Other
+      },
+    },
+  });
+};
+
 export const getAppFilesServer = async (mercEnv: MercatoEnv) => {
   const app = express();
 
@@ -29,59 +102,8 @@ export const getAppFilesServer = async (mercEnv: MercatoEnv) => {
   app.use(express.json());
   app.use(cookieParser(cookieSecret));
 
-  // Notes on app.use(helmet()) location:
-  // https://stackoverflow.com/questions/66968831/does-it-matter-where-i-place-app-usehelmet-within-the-app-use-statements
-  const getHelmet = (rsServerUrl: string) => {
-    return helmet({
-      contentSecurityPolicy: {
-        directives: {
-          "child-src": [SelfVal], // MDN docs are confusing, see https://github.com/w3c/webappsec-csp/issues/299
-          // I'm leaving child-src in since it doesn't hurt anything
-          "connect-src": [SelfVal, rsServerUrl],
-          "default-src": [SelfVal],
-          // Consider allowing for fonts loaded
-          // using "data:"? Needs investigation
-          // to understand security risk
-          "font-src": [SelfVal], // , "data:"
-          "frame-src": [SelfVal],
-          "img-src": [SelfVal],
-          "manifest-src": [SelfVal],
-          "media-src": [SelfVal],
-          "object-src": [NoneVal],
-          "prefetch-src": [SelfVal],
-          "script-src": [SelfVal],
-          "script-src-elem": [SelfVal],
-          "script-src-attr": [SelfVal],
-          "style-src": [SelfVal],
-          /* right now, allowing inline RS widget uses this */
-          "style-src-elem": [SelfVal, UnsafeInlineVal],
-          "style-src-attr": [SelfVal, UnsafeInlineVal],
-          "worker-src": [SelfVal],
-
-          // document directives
-          "base-uri": [SelfVal],
-          "sandbox": null, // we are not using this directive
-
-          // Navigation directives
-          "form-action": [SelfVal],
-          "frame-ancestors": [SelfVal],
-          "navigate-to": null, // This means navigation anywhere is allowed
-          // TODO: consider only allow navigation by having navigate-to
-          // set to a redirect domain controlled by us
-
-          // Reporting directives
-          /* todo: this would be handy to see
-          "report-uri": [SelfVal],
-          "report-to": [SelfVal],
-          */
-
-          // Other
-        },
-      },
-    });
-  };
-
   // this middleware validates that the user is signed in to mercato
+  // it also has the server's helmet declaration, so it needs to be one of the first paths
   app.use((req, res, next) => {
     const redirectWithError = (msg: string) => {
       console.error(msg);
