@@ -4,7 +4,8 @@
   "description": "A privacy friendly hosting service for apps in the RemoteStorage ecosystem",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && cp -r ./src/views ./dist/views && cp -r ./src/app_store_public ./dist/app_store_public && cp -r ./src/apps ./dist/apps",
+    "build": "npm run clean && tsc && cp -r ./src/views ./dist/views && cp -r ./src/app_store_public ./dist/app_store_public && cp -r ./src/apps ./dist/apps",
+    "clean": "rm -rf ./dist",
     "dev": "NODE_PATH=. nodemon --watch . --exec 'ts-node --transpile-only' ./src/index.ts",
     "docker-build": "npm run build && docker build . -t mercato:latest",
     "docker-run": "docker run --env-file='.env' -p 8080:8080 mercato:latest",
