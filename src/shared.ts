@@ -46,15 +46,31 @@ export interface MercatoCookie {
 
 export const mercatoAppDir = path.resolve(__dirname, "apps");
 
+export interface UrlOverride {
+  urlPath: string; // relative path of the url that the mercato receives
+  filePath: string; // relative path of the file to be returned
+  // headers: Record<string, string>; not currently needed, but if you needed to specify the content-type, this'd be handy for that.
+  //   You shouldn't need content-type, since sendFile determines the content-type from the file extension of filePath
+}
+
 export interface App {
   name: string;
   currentVersion: string;
   url: string;
+  overrides?: UrlOverride[];
 }
 
 export const mercatoApps: (env: MercatoEnv) => App[] = (env) =>
   [
     { name: "example", currentVersion: "1" },
+    {
+      name: "inspektor",
+      currentVersion: "1",
+      overrides: [
+        { urlPath: "/connect", filePath: "/index.html" },
+        { urlPath: "/inspect", filePath: "/index.html" },
+      ],
+    },
   ].map(a => ({ ...a, url: getAppDomainName(a.name, env) }));
 
 export const sharedErrorHandler_CSPAware: ErrorHandler = (err, req, res, next) => {

@@ -159,15 +159,21 @@ export const getAppFilesServer = async (mercEnv: MercatoEnv) => {
     const appBaseDir = path.resolve(mercatoAppDir, app.name, app.currentVersion);
     res.set("Cache-control", "public, max-age=31536000");
     try {
-      // SECURITY: here we pass off responsibility to sendFile. It must make sure
+      const override = app.overrides && app.overrides.find(o => o.urlPath == assetPath);
+      const finalPath = override ? override.filePath : assetPath;
+      if (override) {
+        console.log("Overriding path:", assetPath, "with override:", override);
+      }
+      // SECURITY: here we pass off responsibility to sendFile. It makes sure
       // the file being retrieved is inside of appBaseDir.
-      res.sendFile(assetPath, { root: appBaseDir }, (e) => {
+      res.sendFile(finalPath, { root: appBaseDir }, (e) => {
         if (e) {
           console.error("There was an error when sending file!");
           console.error("error was: ", e);
+          console.error("path is:", finalPath);
           res.status(404).end();
         } else {
-          console.log("successful send! of", assetPath);
+          console.log("successful send! app:", app.name, "path:", assetPath);
         }
       });
     } catch (e: any) {
