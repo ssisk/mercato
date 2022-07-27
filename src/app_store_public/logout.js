@@ -19,4 +19,4 @@ const startWidget = () => {
   rs.on("error", (err) => console.error("RS error received:", err));
 };
 
-rsInit();
+startWidget();
