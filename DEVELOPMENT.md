@@ -39,13 +39,13 @@ To add a new app:
 2. update `files_server.ts`, `mercatoApps` constant to add the new app  
 
 # TODOs
+* [ ] login / logout - need these to be more visible (site header)
 * [ ] get front end code into better shape
   * [ ] convert get_mercato_token_from_rs over to typescript
   * [ ] switch remotestorage.js/widget.js so they are loaded from npm 
   * [ ] get_mercato_token_from_rs should switch from using alerts to 
      tell the user information, and instead show status text on the 
      webpage
-  * [ ] create a site header for the mercato server
 * [ ] use helmet in store_server express app?
 * [ ] logout flow: show the users a nice logout message on a real mercato page :)
 * [ ] create a wrapper for app file access that allows them to be stored
